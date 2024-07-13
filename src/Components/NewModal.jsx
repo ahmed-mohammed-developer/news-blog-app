@@ -2,11 +2,14 @@ import React from 'react'
 import demoImg from '../assets/images/demo.jpg'
 import './NewModal.css'
 
-const NewModal = () => {
+const NewModal = ({ show, articale, onClose }) => {
+    if(!show) {
+        return null
+    }
   return (
     <div className='modal-overlay'>
       <div className="modal-content">
-        <span className="class-button">
+        <span className="class-button" onClick={onClose}>
             <i className="fa-solid fa-xmark"></i>
         </span>
         <img src={demoImg} alt="Model Image" className='modal-image' />

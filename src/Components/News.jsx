@@ -25,6 +25,8 @@ const News = () => {
   const [selectCategory, setSelectedCategory] = useState('general');
   const [searchInput, setInputSearch] = useState('')
   const [searchQuery, setInputQuery] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [selectedArticale, setSelectedArtical] = useState(null)
 
 
   useEffect(() => {
@@ -59,6 +61,13 @@ const News = () => {
       setInputQuery(searchInput)
       setInputSearch('')
   }
+
+   const heandleArtical = (article) => {
+    setSelectedArtical(article)
+    setShowModal(true)
+   }
+
+
 
   return (
     <div className='news'>
@@ -102,7 +111,9 @@ const News = () => {
         </div>
         <div className="news-section">
           {headline1 && (
-            <div className="headline">
+            <div className="headline" onClick={() => 
+              heandleArtical(headline1)
+            }>
             <img src={headline1.image || noImg} alt={headline1.title} />
             <h2 className="headline-title">
               {headline1.title}
@@ -113,7 +124,9 @@ const News = () => {
             
             <div className="news-grid">
               {news.map((article, index) => ( 
-                <div key={index} className="news-grid-item">
+                <div key={index} className="news-grid-item" onClick={() => 
+                  heandleArtical(article)
+                }>
               <img src={article.image || noImg} alt={article.title} />
               <h3> 
               {article.title}
@@ -122,7 +135,7 @@ const News = () => {
               </div>))}
             </div>
         </div>
-        <NewModal />
+        <NewModal show={showModal} article={selectedArticale} onClick={() => setShowModal(false)} />
         <div className="my-blogs">
            My Blogs
         </div>
