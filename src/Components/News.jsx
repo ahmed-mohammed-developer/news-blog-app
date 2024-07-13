@@ -71,6 +71,14 @@ const News = () => {
     console.log(articale2)
    }
 
+   const bookmarkClickHandel = (article) => {
+    setBookMarks((prevBookmarks) => {
+      const updateBookmarks = prevBookmarks.find((bookmark) => bookmark.title === article.title) ? prevBookmarks.filter((bookmark) => bookmark.title !== article.title) :[...prevBookmarks, article]
+      
+      return updateBookmarks
+    })
+   }
+
 
 
   return (
@@ -107,8 +115,8 @@ const News = () => {
                                   </a>
 
                 ))}
-                <a href="#" className='nav-link'>Bockmarks 
-                <i className="fa-regular fa-bookmark"></i>
+                <a href="#" className='nav-link' onClick={() => setshowBookmarksModal(true)}>Bockmarks 
+                <i className="fa-solid fa-bookmark"></i>
                 </a>
               </div>
             </nav>
@@ -121,7 +129,17 @@ const News = () => {
             <img src={headline1.image || noImg} alt={headline1.title} />
             <h2 className="headline-title">
               {headline1.title}
-            <i className="fa-regular fa-bookmark bookmark"></i>
+            <i className={`
+             ${bookmarks.some((bookmark) =>
+               bookmark.title === headline1.title) 
+               ? 'fa-solid' 
+               : 'fa-regular'
+               } fa-bookmark bookmark`}
+              onClick={(e) => {
+               e.stopPropagation()
+               bookmarkClickHandel(headline1)
+              }}
+              ></i>
             </h2>
           </div>
           )}
@@ -134,13 +152,22 @@ const News = () => {
               <img src={article.image || noImg} alt={article.title} />
               <h3> 
               {article.title}
-              <i className="fa-regular fa-bookmark bookmark"></i>
+              <i className={` ${bookmarks.some((bookmark) => bookmark.title === article.title) ? "fa-solid" : "fa-regular" } fa-bookmark bookmark`}
+              onClick={(e) => {
+               e.stopPropagation()
+               bookmarkClickHandel(article)
+              }}
+              ></i>
               </h3>
               </div>))}
             </div>
         </div>
         <NewModal show={showModal} articale2={selectedArticale} onClose={() => setShowModal(false)} />
-          <BookMarks />
+          <BookMarks show={showBookmarksModal} bookmarks={bookmarks} onClose={() => 
+            setshowBookmarksModal(false)}
+            onSetlectArtical={heandleArtical}
+            onDeleteBookmark={bookmarkClickHandel}
+            />
         <div className="my-blogs">
            My Blogs
         </div>
