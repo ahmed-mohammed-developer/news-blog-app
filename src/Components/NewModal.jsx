@@ -1,6 +1,7 @@
 import React from 'react'
-import demoImg from '../assets/images/demo.jpg'
 import './NewModal.css'
+import './Modal.css'
+
 
 const NewModal = ({ show, articale2, onClose }) => {
     if(!show) {

@@ -6,6 +6,7 @@ import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
 import axios from 'axios';
 import NewModal from './NewModal';
+import BookMarks from './BookMarks';
 
 const categories = [
   'general',
@@ -27,6 +28,8 @@ const News = () => {
   const [searchQuery, setInputQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [selectedArticale, setSelectedArtical] = useState(null)
+  const [bookmarks, setBookMarks] = useState([])
+  const [showBookmarksModal, setshowBookmarksModal] = useState(false)
 
 
   useEffect(() => {
@@ -137,6 +140,7 @@ const News = () => {
             </div>
         </div>
         <NewModal show={showModal} articale2={selectedArticale} onClose={() => setShowModal(false)} />
+          <BookMarks />
         <div className="my-blogs">
            My Blogs
         </div>
