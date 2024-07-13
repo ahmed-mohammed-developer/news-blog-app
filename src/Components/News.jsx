@@ -62,9 +62,10 @@ const News = () => {
       setInputSearch('')
   }
 
-   const heandleArtical = (article) => {
-    setSelectedArtical(article)
+   const heandleArtical = (articale2) => {
+    setSelectedArtical(articale2)
     setShowModal(true)
+    console.log(articale2)
    }
 
 
@@ -135,7 +136,7 @@ const News = () => {
               </div>))}
             </div>
         </div>
-        <NewModal show={showModal} article={selectedArticale} onClick={() => setShowModal(false)} />
+        <NewModal show={showModal} articale2={selectedArticale} onClose={() => setShowModal(false)} />
         <div className="my-blogs">
            My Blogs
         </div>
