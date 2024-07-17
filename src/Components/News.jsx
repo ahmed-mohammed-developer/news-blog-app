@@ -4,6 +4,11 @@ import Calender from './Calender';
 import './News.css';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
+import blogImg from '../assets/images/blog1.jpg';
+import blogImg2 from '../assets/images/blog2.jpg';
+import blogImg3 from '../assets/images/blog3.jpg';
+import blogImg4 from '../assets/images/blog4.jpg';
+
 import axios from 'axios';
 import NewModal from './NewModal';
 import BookMarks from './BookMarks';
@@ -172,7 +177,21 @@ const News = ({onShowBlogs}) => {
             onDeleteBookmark={bookmarkClickHandel}
             />
         <div className="my-blogs">
-           My Blogs
+          <h1 className="my-blog-heading">My Blogs</h1>
+          <div className="blog-posts">
+            <div className="blog-post">
+              <img src={blogImg} alt="" />
+              <h3>Lorem ipsum dolor sit.</h3>
+              <div className="post-buttons">
+                <button className="edit-post">
+                  <i className="bx bxs-edit"></i>
+                </button>
+                <button className="delete-post">
+                  <i className="bx bxs-x-circle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="weather-calender">
         <Weather />
