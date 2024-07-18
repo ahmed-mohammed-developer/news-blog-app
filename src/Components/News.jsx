@@ -4,10 +4,7 @@ import Calender from './Calender';
 import './News.css';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
-import blogImg from '../assets/images/blog1.jpg';
-import blogImg2 from '../assets/images/blog2.jpg';
-import blogImg3 from '../assets/images/blog3.jpg';
-import blogImg4 from '../assets/images/blog4.jpg';
+
 
 import axios from 'axios';
 import NewModal from './NewModal';
@@ -25,7 +22,7 @@ const categories = [
   'nation'
 ]
 
-const News = ({onShowBlogs}) => {
+const News = ({onShowBlogs, blogs}) => {
   const [headline1, setHeadline] = useState(null);
   const [news, setNwes] = useState([]);
   const [selectCategory, setSelectedCategory] = useState('general');
@@ -179,10 +176,13 @@ const News = ({onShowBlogs}) => {
         <div className="my-blogs">
           <h1 className="my-blog-heading">My Blogs</h1>
           <div className="blog-posts">
-            <div className="blog-post">
-              <img src={blogImg} alt="" />
-              <h3>Lorem ipsum dolor sit.</h3>
-              <div className="post-buttons">
+            {blogs.map((blog, index) => (
+              <div key={index}
+              className="blog-post">
+                    <img src={blog.image  || noImg} alt={blog.title}/>
+                    <h3>{blog.title}</h3>
+                   {/* <p>{blog.content}</p> */}
+                    <div className="post-buttons">
                 <button className="edit-post">
                   <i className="bx bxs-edit"></i>
                 </button>
@@ -190,7 +190,8 @@ const News = ({onShowBlogs}) => {
                   <i className="bx bxs-x-circle"></i>
                 </button>
               </div>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
         <div className="weather-calender">
