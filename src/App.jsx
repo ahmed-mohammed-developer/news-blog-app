@@ -7,18 +7,38 @@ const App = () => {
   const [showNews, setShowNews] = useState(true)
   const [showBlogs, setShowBlogs] = useState(false)
   const [blogs, setBlogs] = useState([])
+  const [selectedPost, setSelectedPost] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
   
   useEffect(() => {
     const savedBlogs = JSON.parse(localStorage.getItem("blogs")) || []
     setBlogs(savedBlogs)
   }, [])
 
-  const handlCreateBlog = (newBlog) => {
+  const handlCreateBlog = (newBlog, isEdit) => {
     setBlogs((prevBlogs) => {
-      const updateBlogs = [...prevBlogs, newBlog]
+      const updateBlogs = isEdit ? prevBlogs.map((blog) => 
+      (blog === selectedPost ? newBlog : blog)) :
+      [...prevBlogs, newBlog]
       localStorage.setItem("blogs", JSON.stringify(updateBlogs))
       return updateBlogs
     } )
+    setIsEditing(false)
+    setSelectedPost(null)
+  }
+  const handleEditBlog = (blog) => {
+    setSelectedPost(blog)
+    setIsEditing(true)
+    setShowNews(false)
+    setShowBlogs(true)
+  }
+
+  const handleDeleteBlog = (blogToDelete) => {
+      setBlogs((prevBlogs) => {
+        const updateBlogs = prevBlogs.filter((blog) => blog !== blogToDelete)
+        localStorage.setItem('blogs', JSON.stringify(updateBlogs))
+        return updateBlogs
+      })
   }
 
   const handleShowBlogs = () => {
@@ -29,12 +49,14 @@ const App = () => {
   const handleBackToNews = () => {
     setShowNews(true)
     setShowBlogs(false)
+    setIsEditing(false)
+    setSelectedPost(null)
   } 
   return (
     <div className='container'>
       <div className='news-blogs-app'>
-        {showNews &&<News onShowBlogs={handleShowBlogs} blogs={blogs} /> }
-        {showBlogs &&<Blogs onBack={handleBackToNews} onCreateBlog={handlCreateBlog} /> }
+        {showNews &&<News onShowBlogs={handleShowBlogs} blogs={blogs} onEditBlog={handleEditBlog} onDeleteBlog={handleDeleteBlog}/> }
+        {showBlogs &&<Blogs onBack={handleBackToNews} onCreateBlog={handlCreateBlog} editPost={selectedPost} isEditing={isEditing}/> }
        
       </div>
     </div>

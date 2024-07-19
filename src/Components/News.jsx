@@ -4,6 +4,7 @@ import Calender from './Calender';
 import './News.css';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
+import BlogsModale from './BlogsModale';
 
 
 import axios from 'axios';
@@ -22,7 +23,7 @@ const categories = [
   'nation'
 ]
 
-const News = ({onShowBlogs, blogs}) => {
+const News = ({onShowBlogs, blogs, onEditBlog, onDeleteBlog}) => {
   const [headline1, setHeadline] = useState(null);
   const [news, setNwes] = useState([]);
   const [selectCategory, setSelectedCategory] = useState('general');
@@ -32,6 +33,8 @@ const News = ({onShowBlogs, blogs}) => {
   const [selectedArticale, setSelectedArtical] = useState(null)
   const [bookmarks, setBookMarks] = useState([])
   const [showBookmarksModal, setshowBookmarksModal] = useState(false)
+  const [selectedPost, setSlectedPoset] = useState(null)
+  const [showBlogsModal, setShowBlogsModal] = useState(false)
 
 
   useEffect(() => {
@@ -84,6 +87,15 @@ const News = ({onShowBlogs, blogs}) => {
     })
    }
 
+   const handalBlogClick = (blog) => {
+      setSlectedPoset(blog)
+      setShowBlogsModal(true)
+   }
+
+   const CloseBlogModal = () => {
+    setShowBlogsModal(false)
+    setSlectedPoset(null)
+   }
 
 
   return (
@@ -178,21 +190,25 @@ const News = ({onShowBlogs, blogs}) => {
           <div className="blog-posts">
             {blogs.map((blog, index) => (
               <div key={index}
-              className="blog-post">
+              className="blog-post" onClick={() => handalBlogClick(blog)}>
                     <img src={blog.image  || noImg} alt={blog.title}/>
                     <h3>{blog.title}</h3>
-                   {/* <p>{blog.content}</p> */}
                     <div className="post-buttons">
-                <button className="edit-post">
+                <button className="edit-post" onClick={() => onEditBlog(blog)
+                }>
                   <i className="bx bxs-edit"></i>
                 </button>
-                <button className="delete-post">
+                <button className="delete-post" onClick={(e) =>{e.stopPropagation()
+                   onDeleteBlog(blog) } }>
                   <i className="bx bxs-x-circle"></i>
                 </button>
               </div>
               </div>
             ))}
           </div>
+          {selectedPost && showBlogsModal && (
+              <BlogsModale show={showBlogsModal} blog={selectedPost} onClose={CloseBlogModal} />
+          )}
         </div>
         <div className="weather-calender">
         <Weather />
